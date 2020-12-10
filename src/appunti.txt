@@ -1,0 +1,44 @@
+//editare lo stile in una funzione
+
+const useStyles = makeStyles({
+    root: {
+      marginRight: "5px",
+      float: "left",
+      backgroundColor: "#4caf50",
+      '&:hover': {backgroundColor: '#357a38'}
+      },
+    tr: {
+        '&:hover': {backgroundColor: "darkseagreen"}
+    },
+    tablehead: {
+        fontWeight: "bold"
+    }
+  });
+
+function MostraDipendenti(props){
+    const classes = useStyles();
+    return( 
+    <div>
+        <Button className={classes.root} variant="contained">Aggiungi</Button>
+        <Button className={classes.root} variant="contained">Modifica</Button>
+        <Button className={classes.root} variant="contained">Elimina</Button>
+        <TableContainer component={Paper}>
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableCell className={classes.tablehead}>ID</TableCell>
+                    <TableCell className={classes.tablehead}>Nome</TableCell>
+                    <TableCell className={classes.tablehead}>Cognome</TableCell>
+                </TableHead>
+                <TableBody>
+                {props.dipendenti.map(dipendente => (
+                    <TableRow className={classes.tr} key={dipendente.id}>
+                        <TableCell>{dipendente.id}</TableCell>
+                        <TableCell>{dipendente.nome}</TableCell> 
+                        <TableCell>{dipendente.cognome}</TableCell>
+                    </TableRow>                        
+                ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </div>)
+}

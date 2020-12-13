@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,7 +20,13 @@ const useStyles = makeStyles({
       },
     delete: {
         backgroundColor: "#f44336",
+        marginRight: "5px",
       '&:hover': {backgroundColor: '#aa2e25'}
+    },
+    edit: {
+        backgroundColor: "#ffc107",
+        marginRight: "5px",
+      '&:hover': {backgroundColor: '#b28704'}
     },
     tr: {
         '&:hover': {backgroundColor: "darkseagreen"}
@@ -29,20 +35,27 @@ const useStyles = makeStyles({
         fontWeight: "bold"
     }
   });
-
-  function deleteDipendente(props){
-    console.log(props)
-  }
   
 
 function MostraDipendenti(props){
     const classes = useStyles();
+    const [dipendenti, setdipendenti] = useState(props.dipendenti);
+
+    function deleteDipendente(id){
+        fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
+        .then(result => { 
+            const newdipendenti = dipendenti.filter((dipendente) => dipendente.id !== id)
+            console.log(newdipendenti)
+                setdipendenti({
+                    dipendenti: newdipendenti
+                })
+            })
+            .catch(e => console.error(e))
+    }
 
     return( 
     <div>
         <Button className={classes.root} variant="contained">Aggiungi</Button>
-        <Button className={classes.root} variant="contained">Modifica</Button>
-        
         <TableContainer component={Paper}>
             <Table className={classes.table}>
                 <TableHead>
@@ -53,13 +66,14 @@ function MostraDipendenti(props){
                     <TableCell className={classes.tablehead}></TableCell>
                 </TableHead>
                 <TableBody>
-                {props.dipendenti.map(dipendente => (
+                {dipendenti.map(dipendente => (
                     <TableRow className={classes.tr} key={dipendente.id}>
                         {/* <TableCell padding="checkbox"><Checkbox></Checkbox></TableCell> */}
                         <TableCell>{dipendente.id}</TableCell>
                         <TableCell>{dipendente.nome}</TableCell> 
                         <TableCell>{dipendente.cognome}</TableCell>
-                        <TableCell><Button className={classes.delete} onClick={() => deleteDipendente(dipendente.id)} variant="contained">Elimina</Button></TableCell>
+                        <TableCell><Button className={classes.delete} onClick={() => deleteDipendente(dipendente.id)} variant="contained">Elimina</Button>
+                        <Button className={classes.edit} variant="contained">Modifica</Button></TableCell>
                     </TableRow>                        
                 ))}
                 </TableBody>

@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 
 function MostraDipendenti(props){
     const classes = useStyles();
-    const [dipendenti, setdipendenti] = useState(props.dipendenti);
+    /*const [dipendenti, setdipendenti] = useState(props.dipendenti);
 
     function deleteDipendente(id){
         fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
@@ -51,7 +51,7 @@ function MostraDipendenti(props){
                 })
             })
             .catch(e => console.error(e))
-    }
+    } */
 
     return( 
     <div>
@@ -66,13 +66,13 @@ function MostraDipendenti(props){
                     <TableCell className={classes.tablehead}></TableCell>
                 </TableHead>
                 <TableBody>
-                {dipendenti.map(dipendente => (
+                {props.dipendenti.map(dipendente => (
                     <TableRow className={classes.tr} key={dipendente.id}>
                         {/* <TableCell padding="checkbox"><Checkbox></Checkbox></TableCell> */}
                         <TableCell>{dipendente.id}</TableCell>
                         <TableCell>{dipendente.nome}</TableCell> 
                         <TableCell>{dipendente.cognome}</TableCell>
-                        <TableCell><Button className={classes.delete} onClick={() => deleteDipendente(dipendente.id)} variant="contained">Elimina</Button>
+                        <TableCell><Button className={classes.delete} onClick={() => props.onClick(dipendente.id)} variant="contained">Elimina</Button>
                         <Button className={classes.edit} variant="contained">Modifica</Button></TableCell>
                     </TableRow>                        
                 ))}

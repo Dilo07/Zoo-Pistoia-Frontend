@@ -8,7 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-/* import MostraDipendenti from './mostradipendenti' */
+import AddDipendente from './AddDipendente'
+import MostraDipendenti from './mostradipendenti'
 
 const useStyles = ({
     root: {
@@ -62,6 +63,10 @@ class Dipendenti extends React.Component{
         );
     }    
 
+    addDipendente(){
+        console.log('entra')
+    }
+
     deleteDipendente(id){
         const dipendenti = this.state.dipendenti
         fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
@@ -71,13 +76,21 @@ class Dipendenti extends React.Component{
                 this.setState({
                     dipendenti: newdipendenti
                 })
-            })
-            .catch(e => console.error(e))
+            },
+            (error) => {
+                this.setState({
+                  isloaded: true,
+                  error
+                })
+              }
+            );
+            /* .catch(e => console.error(e)) */
     }
 
     render(){
         const {error,isloaded,dipendenti} = this.state
         const {classes} = this.props
+        const inputForm = <AddDipendente></AddDipendente>
 
         if(error){
             return <div> error: {error.message}</div>
@@ -86,12 +99,12 @@ class Dipendenti extends React.Component{
         } else{
             return(
                 <div>
-                   {/*  <MostraDipendenti dipendenti={dipendenti}/> */}
-                    <Button className={classes.root} variant="contained">Aggiungi</Button>
+                    <MostraDipendenti dipendenti={dipendenti} onClick={(id) => this.deleteDipendente(id)}/>
+                    {/* <Button className={classes.root} onClick={this.addDipendente} variant="contained">Aggiungi</Button>
                     <TableContainer component={Paper}>
                         <Table className={classes.table}>
                             <TableHead>
-                                {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
+                                
                                 <TableCell className={classes.tablehead}>ID</TableCell>
                                 <TableCell className={classes.tablehead}>Nome</TableCell>
                                 <TableCell className={classes.tablehead}>Cognome</TableCell>
@@ -100,7 +113,7 @@ class Dipendenti extends React.Component{
                             <TableBody>
                             {dipendenti.map(dipendente => (
                                 <TableRow className={classes.tr} key={dipendente.id}>
-                                    {/* <TableCell padding="checkbox"><Checkbox></Checkbox></TableCell> */}
+                                
                                     <TableCell>{dipendente.id}</TableCell>
                                     <TableCell>{dipendente.nome}</TableCell> 
                                     <TableCell>{dipendente.cognome}</TableCell>
@@ -110,7 +123,7 @@ class Dipendenti extends React.Component{
                             ))}
                             </TableBody>
                         </Table>
-                    </TableContainer>
+                    </TableContainer> */}
                 </div>
             )
         }

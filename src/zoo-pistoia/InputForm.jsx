@@ -1,8 +1,8 @@
 import React from 'react'
 
-function AddDipendente(){
+function InputForm(){
 
     return <h1>Ciao</h1>
 }
 
-export default AddDipendente
+export default InputForm

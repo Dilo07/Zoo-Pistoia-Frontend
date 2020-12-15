@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 
 //modifica dello stile in una funzione
@@ -55,7 +54,7 @@ function MostraDipendenti(props){
 
     return( 
     <div>
-        <Button className={classes.root} variant="contained">Aggiungi</Button>
+        <Button className={classes.root} onClick={() => props.clickAdd()} variant="contained">Aggiungi</Button>
         <TableContainer component={Paper}>
             <Table className={classes.table}>
                 <TableHead>
@@ -72,7 +71,7 @@ function MostraDipendenti(props){
                         <TableCell>{dipendente.id}</TableCell>
                         <TableCell>{dipendente.nome}</TableCell> 
                         <TableCell>{dipendente.cognome}</TableCell>
-                        <TableCell><Button className={classes.delete} onClick={() => props.onClick(dipendente.id)} variant="contained">Elimina</Button>
+                        <TableCell><Button className={classes.delete} onClick={() => props.clickDelete(dipendente.id)} variant="contained">Elimina</Button>
                         <Button className={classes.edit} variant="contained">Modifica</Button></TableCell>
                     </TableRow>                        
                 ))}

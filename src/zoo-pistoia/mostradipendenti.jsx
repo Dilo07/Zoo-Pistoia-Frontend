@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
-//modifica dello stile in una funzione
+//modifica dello stile in una funzione, quando si utilizzano le funzioni importare makeStyles
 const useStyles = makeStyles({
     root: {
       marginRight: "5px",
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     }
   });
   
-
+// funzione che prende in ingresso props.dipendenti con tutta la lista di dipendenti ed estrae la tabella
 function MostraDipendenti(props){
     const classes = useStyles();
     /*const [dipendenti, setdipendenti] = useState(props.dipendenti);

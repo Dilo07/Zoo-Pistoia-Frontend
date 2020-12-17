@@ -5,7 +5,7 @@ import Dati from './zoo-pistoia/home'
 import Listanumeri from './esercizio map' */
 
 
-class Esercizi extends React.Component{
+class ZooPistoia extends React.Component{
   
     render(){
         return(
@@ -19,6 +19,6 @@ class Esercizi extends React.Component{
 }
 
 ReactDOM.render(
-    <Esercizi/>,
+    <ZooPistoia/>,
     document.getElementById('root')
 );

@@ -10,11 +10,13 @@ class Dipendenti extends React.Component{
         this.state = {
             error: null,
             isloaded: false,
-            dipendenti: []
+            dipendenti: [],
+            viewForm: false
         }
     }
-
+    //funzione che si avvia non appena è stato inizializzato lo stato
     componentDidMount(){
+        //chiamata get di tutti i dipendenti
         fetch('http://localhost:8080/Dipendenti/getAll').then(response => response.json())
         .then(result => {
             this.setState({
@@ -30,11 +32,34 @@ class Dipendenti extends React.Component{
           }
         );
     }    
-
-    addDipendente(){
-        console.log('entra')
+    //funzione per switchare tra il form di inserimento nuovo dipendente e la tabella dei dipendenti
+    switchForm(){
+        this.setState({
+            viewForm: !this.state.viewForm
+        })
     }
-
+    //funzione richiamata quando si salva un nuovo dipendente
+    addDipendente(nome,cognome){
+        const dipendenti = this.state.dipendenti
+        fetch('http://localhost:8080/Dipendenti/newDipendente', {
+            method: 'post',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                nome: nome,
+                cognome: cognome
+            })
+        }).then(response => response.json())
+        .then(result => {
+            const newdipendenti = dipendenti.concat({ nome: nome, cognome: cognome})
+            console.log(newdipendenti)
+            this.setState({
+                dipendenti: newdipendenti,
+                viewForm: !this.state.viewForm
+            })
+        })
+        
+    }
+    //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti
     deleteDipendente(id){
         const dipendenti = this.state.dipendenti
         fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
@@ -55,22 +80,21 @@ class Dipendenti extends React.Component{
     }
 
     render(){
-        const {error,isloaded,dipendenti} = this.state
+        const {error,isloaded,dipendenti,viewForm} = this.state
         /* const {classes} = this.props */
-        const Inputform = <InputForm></InputForm>
-        const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.addDipendente()} clickDelete={(id) => this.deleteDipendente(id)}/>
+        const Inputform = <InputForm clickBack={() => this.switchForm()} clickSave={(nome,cognome) => this.addDipendente(nome,cognome)}/>
+        const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickDelete={(id) => this.deleteDipendente(id)}/>
 
         if(error){
             return <div> error: {error.message}</div>
         }else if(!isloaded){
             return <div>Loading...</div>
         } else{
-            return(
-                <div>
-                    {Dati}
-                    {Inputform}
-                </div>
-            )
+            if(viewForm){
+                return(<div className="Center">{Inputform}</div>)
+            }else{
+                return(<div>{Dati}</div>)
+            }
         }
     }
 }

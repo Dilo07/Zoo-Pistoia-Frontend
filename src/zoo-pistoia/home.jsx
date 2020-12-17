@@ -13,7 +13,7 @@ function Area(props){
     }
 }
 
-//modifica dello stile in una classe
+//modifica dello stile in una classe, quando si usano le classi importare withStyles
 const useStyles = ({
     root: {
         marginRight: "5px",
@@ -52,10 +52,9 @@ class Dati extends React.Component{
             <div>
                 <div className="Center">
                     <h1> Zoo Pistoia</h1>
-                    <div>
-                        <Button className={classes.root} variant="contained" onClick={this.clickDipendenti}>Dipendenti</Button>
-                        <Button className={classes.root} variant="contained" onClick={this.clickAnimali}> Animali</Button>
-                    </div>
+                    {/* in base al bottone premuto modifica lo state.areaselezionata */}
+                    <Button className={classes.root} variant="contained" onClick={this.clickDipendenti}>Dipendenti</Button>
+                    <Button className={classes.root} variant="contained" onClick={this.clickAnimali}> Animali</Button>
                 </div>
                 <Area area={this.state.areaSelezionata}></Area>
             </div>

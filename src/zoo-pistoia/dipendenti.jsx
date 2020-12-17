@@ -50,7 +50,7 @@ class Dipendenti extends React.Component{
             })
         }).then(response => response.json())
         .then(result => {
-            const newdipendenti = dipendenti.concat({ nome: nome, cognome: cognome})
+            const newdipendenti = dipendenti.concat({ id: result, nome: nome, cognome: cognome})
             console.log(newdipendenti)
             this.setState({
                 dipendenti: newdipendenti,

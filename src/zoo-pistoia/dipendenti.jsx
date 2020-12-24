@@ -11,7 +11,8 @@ class Dipendenti extends React.Component{
             error: null,
             isloaded: false,
             dipendenti: [],
-            viewForm: false
+            viewForm: false,
+            dipendenteEdit: []
         }
     }
     //funzione che si avvia non appena è stato inizializzato lo stato
@@ -38,6 +39,36 @@ class Dipendenti extends React.Component{
             viewForm: !this.state.viewForm
         })
     }
+
+    //funzione per switchare tra il form di edit di un dipendente e la tabella dei dipendenti
+    // salva nello state dipendenteEdit tutti l'oggetto dipendente preso dal component mostradipendenti
+    switchFormEdit(dipendente){
+        this.setState({
+            viewForm: !this.state.viewForm,
+            dipendenteEdit: dipendente
+        })
+    }
+
+    editDipendente(infoNewDip){
+        const dipendenti = this.state.dipendenti
+        fetch('http://localhost:8080/Dipendenti/updateDipendente', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                id: infoNewDip.id,
+                nome: infoNewDip.nome,
+                cognome: infoNewDip.cognome
+            })
+        }).then(response => response.json())
+        .then(result => {
+            /* const newdipendenti = dipendenti.concat({ id: result, nome: nome, cognome: cognome}) */
+            this.setState({
+                /* dipendenti: newdipendenti, */
+                viewForm: !this.state.viewForm
+            })
+        })
+    }
+
     //funzione richiamata quando si salva un nuovo dipendente
     addDipendente(nome,cognome){
         const dipendenti = this.state.dipendenti
@@ -51,14 +82,13 @@ class Dipendenti extends React.Component{
         }).then(response => response.json())
         .then(result => {
             const newdipendenti = dipendenti.concat({ id: result, nome: nome, cognome: cognome})
-            console.log(newdipendenti)
             this.setState({
                 dipendenti: newdipendenti,
                 viewForm: !this.state.viewForm
             })
         })
-        
     }
+
     //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti
     deleteDipendente(id){
         const dipendenti = this.state.dipendenti
@@ -80,10 +110,14 @@ class Dipendenti extends React.Component{
     }
 
     render(){
-        const {error,isloaded,dipendenti,viewForm} = this.state
+        const {error,isloaded,dipendenti,viewForm, dipendenteEdit} = this.state
         /* const {classes} = this.props */
-        const Inputform = <InputForm clickBack={() => this.switchForm()} clickSave={(nome,cognome) => this.addDipendente(nome,cognome)}/>
-        const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickDelete={(id) => this.deleteDipendente(id)}/>
+        // passargli nome={nomeState} cognome={cognomeState} valorizzati nello state 
+        const Inputform = <InputForm dipendente={dipendenteEdit} clickBack={() => this.switchForm()} 
+        clickSaveAdd={(nome,cognome) => this.addDipendente(nome,cognome)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
+
+        const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
+        clickDelete={(id) => this.deleteDipendente(id)}/>
 
         if(error){
             return <div> error: {error.message}</div>

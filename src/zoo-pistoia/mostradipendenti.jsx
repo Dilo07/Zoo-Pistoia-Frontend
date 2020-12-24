@@ -72,7 +72,7 @@ function MostraDipendenti(props){
                         <TableCell>{dipendente.nome}</TableCell> 
                         <TableCell>{dipendente.cognome}</TableCell>
                         <TableCell><Button className={classes.delete} onClick={() => props.clickDelete(dipendente.id)} variant="contained">Elimina</Button>
-                        <Button className={classes.edit} variant="contained">Modifica</Button></TableCell>
+                        <Button className={classes.edit} onClick={() => props.clickEdit(dipendente)} variant="contained">Modifica</Button></TableCell>
                     </TableRow>                        
                 ))}
                 </TableBody>

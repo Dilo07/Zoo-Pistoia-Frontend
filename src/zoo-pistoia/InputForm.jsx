@@ -14,18 +14,31 @@ const useStyles = makeStyles({
 })
 
 function InputForm(props){
+    const classes = useStyles();
     //hooks definisco l'oggetto infoNewDip con le sue istanze nome e cognome che saranno modificati con il setInfo che richiamerà useStase
-    const [ infoNewDip, setInfo ] = useState({nome: '', cognome: ''});
+    const [ infoNewDip, setInfo ] = useState({id: props.dipendente.id, nome: props.dipendente.nome, cognome: props.dipendente.cognome});
     const onSubmit = () => {
-        if(infoNewDip.nome === '' || infoNewDip.cognome === '' ){
-            alert('Inserisci un valore')
+        if(!infoNewDip.id){
+            console.log('entra in add')
+            if(infoNewDip.nome === '' || infoNewDip.cognome === '' ){
+                alert('Inserisci un valore')
+            }
+            else{
+                props.clickSaveAdd(infoNewDip.nome, infoNewDip.cognome)
+            }
         }
         else{
-            props.clickSave(infoNewDip.nome, infoNewDip.cognome)
+            console.log('entra in edit')
+            if(infoNewDip.nome === '' || infoNewDip.cognome === '' ){
+                alert('Inserisci un valore')
+            }
+            else{
+                props.clickSaveEdit(infoNewDip)
+            }
         }
-        /* console.log(infoNewDip.nome, infoNewDip.cognome); */
+        
     }
-    const classes = useStyles();
+    
 
     return (
     <div>
@@ -35,6 +48,7 @@ function InputForm(props){
                 <TextField  required onChange={e => setInfo({...infoNewDip, nome: e.target.value})} value={infoNewDip.nome} label="Nome" defaultValue="" />
             </Grid>
             <Grid>
+                {/* ... prende l'oggetto infoNewDip e va ad aggiungere la modifica fatta su cognome, lasciando invariato nome */}
                 <TextField required onChange={e => setInfo({...infoNewDip, cognome: e.target.value})} value={infoNewDip.cognome} label="Cognome" defaultValue=""/>
             </Grid>
             <Grid item style={{ marginTop: 16 }}>

@@ -33,10 +33,12 @@ class Dipendenti extends React.Component{
           }
         );
     }    
-    //funzione per switchare tra il form di inserimento nuovo dipendente e la tabella dei dipendenti
+    // funzione per switchare tra il form di inserimento nuovo dipendente e la tabella dei dipendenti. 
+    // Svuota l'oggetto dipendentiEdit in caso fosse valorizzato
     switchForm(){
         this.setState({
-            viewForm: !this.state.viewForm
+            viewForm: !this.state.viewForm,
+            dipendenteEdit: []
         })
     }
 
@@ -49,8 +51,9 @@ class Dipendenti extends React.Component{
         })
     }
 
+    //funzione richiamata quando si edita un dipendente
     editDipendente(infoNewDip){
-        const dipendenti = this.state.dipendenti
+        /* const dipendenti = this.state.dipendenti */
         fetch('http://localhost:8080/Dipendenti/updateDipendente', {
             method: 'put',
             headers: {'Content-type': 'application/json'},
@@ -61,27 +64,27 @@ class Dipendenti extends React.Component{
             })
         }).then(response => response.json())
         .then(result => {
-            /* const newdipendenti = dipendenti.concat({ id: result, nome: nome, cognome: cognome}) */
+            /* anziché modificare lo state dipendenti aggiorno la pagina*/
+            window.location.reload(false);
             this.setState({
-                /* dipendenti: newdipendenti, */
                 viewForm: !this.state.viewForm
             })
         })
     }
 
     //funzione richiamata quando si salva un nuovo dipendente
-    addDipendente(nome,cognome){
+    addDipendente(infoNewDip){
         const dipendenti = this.state.dipendenti
         fetch('http://localhost:8080/Dipendenti/newDipendente', {
             method: 'post',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                nome: nome,
-                cognome: cognome
+                nome: infoNewDip.nome,
+                cognome: infoNewDip.cognome
             })
         }).then(response => response.json())
         .then(result => {
-            const newdipendenti = dipendenti.concat({ id: result, nome: nome, cognome: cognome})
+            const newdipendenti = dipendenti.concat({ id: result, nome: infoNewDip.nome, cognome: infoNewDip.cognome})
             this.setState({
                 dipendenti: newdipendenti,
                 viewForm: !this.state.viewForm
@@ -114,7 +117,7 @@ class Dipendenti extends React.Component{
         /* const {classes} = this.props */
         // passargli nome={nomeState} cognome={cognomeState} valorizzati nello state 
         const Inputform = <InputForm dipendente={dipendenteEdit} clickBack={() => this.switchForm()} 
-        clickSaveAdd={(nome,cognome) => this.addDipendente(nome,cognome)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
+        clickSaveAdd={(infoNewDip) => this.addDipendente(infoNewDip)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
 
         const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
         clickDelete={(id) => this.deleteDipendente(id)}/>

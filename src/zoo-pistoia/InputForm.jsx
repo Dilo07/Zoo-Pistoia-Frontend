@@ -24,7 +24,7 @@ function InputForm(props){
                 alert('Inserisci un valore')
             }
             else{
-                props.clickSaveAdd(infoNewDip.nome, infoNewDip.cognome)
+                props.clickSaveAdd(infoNewDip)
             }
         }
         else{
@@ -36,14 +36,13 @@ function InputForm(props){
                 props.clickSaveEdit(infoNewDip)
             }
         }
-        
     }
     
 
     return (
     <div>
         <h1>Inserisci i dati del nuovo dipendente</h1>
-        <form autoComplete="off" /* onSubmit={onSubmit()} */>
+        <form autoComplete="off" /* onSubmit={() => onSubmit()} */>
             <Grid>
                 <TextField  required onChange={e => setInfo({...infoNewDip, nome: e.target.value})} value={infoNewDip.nome} label="Nome" defaultValue="" />
             </Grid>

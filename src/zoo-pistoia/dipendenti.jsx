@@ -65,7 +65,7 @@ class Dipendenti extends React.Component{
         }).then(response => response.json())
         .then(result => {
             /* anziché modificare lo state dipendenti aggiorno la pagina*/
-            window.location.reload(false);
+            window.location.reload();
             this.setState({
                 viewForm: !this.state.viewForm
             })
@@ -112,6 +112,22 @@ class Dipendenti extends React.Component{
             /* .catch(e => console.error(e)) */
     }
 
+    sortDipendenti(key){
+        this.setState({
+            dipendenti: this.state.dipendenti.sort((a,b) => {
+                if(a[key] > b[key]){
+                    return 1
+                }
+                if(a[key] < b[key]){
+                    return -1
+                }
+                else {
+                    return 0
+                }
+            })
+        })
+    }
+
     render(){
         const {error,isloaded,dipendenti,viewForm, dipendenteEdit} = this.state
         /* const {classes} = this.props */
@@ -120,7 +136,7 @@ class Dipendenti extends React.Component{
         clickSaveAdd={(infoNewDip) => this.addDipendente(infoNewDip)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
 
         const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
-        clickDelete={(id) => this.deleteDipendente(id)}/>
+        clickDelete={(id) => this.deleteDipendente(id)} sortBy={(key) => this.sortDipendenti(key)} />
 
         if(error){
             return <div> error: {error.message}</div>

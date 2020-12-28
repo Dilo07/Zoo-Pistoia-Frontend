@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { makeStyles } from '@material-ui/core/styles';
 
 //modifica dello stile in una funzione, quando si utilizzano le funzioni importare makeStyles
@@ -38,19 +39,6 @@ const useStyles = makeStyles({
 // funzione che prende in ingresso props.dipendenti con tutta la lista di dipendenti ed estrae la tabella
 function MostraDipendenti(props){
     const classes = useStyles();
-    /*const [dipendenti, setdipendenti] = useState(props.dipendenti);
-
-    function deleteDipendente(id){
-        fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
-        .then(result => { 
-            const newdipendenti = dipendenti.filter((dipendente) => dipendente.id !== id)
-            console.log(newdipendenti)
-                setdipendenti({
-                    dipendenti: newdipendenti
-                })
-            })
-            .catch(e => console.error(e))
-    } */
 
     return( 
     <div>
@@ -59,7 +47,7 @@ function MostraDipendenti(props){
             <Table className={classes.table}>
                 <TableHead>
                     {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
-                    <TableCell className={classes.tablehead}>ID</TableCell>
+                    <TableCell className={classes.tablehead}> ID <ArrowDropDownIcon onClick={() => props.sortBy('id') }/></TableCell>
                     <TableCell className={classes.tablehead}>Nome</TableCell>
                     <TableCell className={classes.tablehead}>Cognome</TableCell>
                     <TableCell className={classes.tablehead}></TableCell>

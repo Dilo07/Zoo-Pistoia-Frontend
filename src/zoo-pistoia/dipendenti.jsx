@@ -112,31 +112,43 @@ class Dipendenti extends React.Component{
             /* .catch(e => console.error(e)) */
     }
 
-    sortDipendenti(key){
-        this.setState({
-            dipendenti: this.state.dipendenti.sort((a,b) => {
-                if(a[key] > b[key]){
-                    return 1
-                }
-                if(a[key] < b[key]){
-                    return -1
-                }
-                else {
-                    return 0
-                }
+    sortDipendenti(key, direction){
+        if (direction === 'DOWN'){
+            console.log(direction)
+            this.setState({
+                dipendenti: this.state.dipendenti.sort((a,b) => 
+                   /*  if(a[key] > b[key]){
+                        return 1
+                    }
+                    if(a[key] < b[key]){
+                        return -1
+                    }
+                    else {
+                        return 0
+                    } */
+                    // Ascending
+                    a[key] - b[key]
+                )
             })
-        })
+        }
+        else{
+            this.setState({
+                dipendenti: this.state.dipendenti.sort((a,b) => 
+                    b[key] - a[key]
+                )
+            })
+        }
+       
     }
 
     render(){
         const {error,isloaded,dipendenti,viewForm, dipendenteEdit} = this.state
         /* const {classes} = this.props */
-        // passargli nome={nomeState} cognome={cognomeState} valorizzati nello state 
         const Inputform = <InputForm dipendente={dipendenteEdit} clickBack={() => this.switchForm()} 
         clickSaveAdd={(infoNewDip) => this.addDipendente(infoNewDip)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
 
         const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
-        clickDelete={(id) => this.deleteDipendente(id)} sortBy={(key) => this.sortDipendenti(key)} />
+        clickDelete={(id) => this.deleteDipendente(id)} sortBy={(key, direction) => this.sortDipendenti(key, direction)} />
 
         if(error){
             return <div> error: {error.message}</div>

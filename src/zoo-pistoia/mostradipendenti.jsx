@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { makeStyles } from '@material-ui/core/styles';
 
 //modifica dello stile in una funzione, quando si utilizzano le funzioni importare makeStyles
@@ -39,6 +40,19 @@ const useStyles = makeStyles({
 // funzione che prende in ingresso props.dipendenti con tutta la lista di dipendenti ed estrae la tabella
 function MostraDipendenti(props){
     const classes = useStyles();
+    const [direction, setDirection] = useState('UP')
+
+    const switchDirection = (key) => {
+        if ( direction === 'DOWN'){
+            //Chiama la funzione di ordinamento nel componente superiore dipendenti e modifica la direction
+            props.sortBy(key,direction)
+            setDirection('UP')
+        }
+        else{
+            props.sortBy(key,direction)
+            setDirection('DOWN')
+        }
+    }
 
     return( 
     <div>
@@ -47,8 +61,9 @@ function MostraDipendenti(props){
             <Table className={classes.table}>
                 <TableHead>
                     {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
-                    <TableCell className={classes.tablehead}> ID <ArrowDropDownIcon onClick={() => props.sortBy('id') }/></TableCell>
-                    <TableCell className={classes.tablehead}>Nome</TableCell>
+                   {/*  in base allo stato direction mostra l'icona e al click chiama la funzione passandogli la key */}
+                    <TableCell className={classes.tablehead}> ID {direction === 'UP' ? (<ArrowDropDownIcon onClick={() => switchDirection('id')}/>) : (<ArrowDropUpIcon onClick={() => switchDirection('id')}/>)} </TableCell>
+                    <TableCell className={classes.tablehead}>Nome </TableCell>
                     <TableCell className={classes.tablehead}>Cognome</TableCell>
                     <TableCell className={classes.tablehead}></TableCell>
                 </TableHead>

@@ -114,10 +114,10 @@ class Dipendenti extends React.Component{
 
     sortDipendenti(key, direction){
         if (direction === 'DOWN'){
-            console.log(direction)
+            console.log(this.state.dipendenti)
             this.setState({
                 dipendenti: this.state.dipendenti.sort((a,b) => 
-                   /*  if(a[key] > b[key]){
+                    {if(a[key] > b[key]){
                         return 1
                     }
                     if(a[key] < b[key]){
@@ -125,17 +125,28 @@ class Dipendenti extends React.Component{
                     }
                     else {
                         return 0
-                    } */
+                    }
                     // Ascending
-                    a[key] - b[key]
-                )
+                    /* a[key] - b[key] */
+                    })
             })
         }
         else{
+            console.log(this.state.dipendenti)
             this.setState({
                 dipendenti: this.state.dipendenti.sort((a,b) => 
-                    b[key] - a[key]
-                )
+                   /*  b[key] - a[key] */
+                   {
+                    if(b[key] > a[key]){
+                        return 1
+                    }
+                    if(b[key] < a[key]){
+                        return -1
+                    }
+                    else {
+                        return 0
+                    }
+                   })
             })
         }
        

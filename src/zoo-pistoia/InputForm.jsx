@@ -19,8 +19,8 @@ function InputForm(props){
     const [ infoNewDip, setInfo ] = useState({id: props.dipendente.id, nome: props.dipendente.nome, cognome: props.dipendente.cognome});
     const onSubmit = () => {
         if(!infoNewDip.id){
-            console.log('entra in add')
-            if(infoNewDip.nome === '' || infoNewDip.cognome === '' ){
+            // Verifica che il campo non sia vuoto o undefined
+            if(infoNewDip.nome === undefined || infoNewDip.nome === '' || infoNewDip.cognome === undefined || infoNewDip.cognome === ''  ){
                 alert('Inserisci un valore')
             }
             else{
@@ -28,7 +28,6 @@ function InputForm(props){
             }
         }
         else{
-            console.log('entra in edit')
             if(infoNewDip.nome === '' || infoNewDip.cognome === '' ){
                 alert('Inserisci un valore')
             }

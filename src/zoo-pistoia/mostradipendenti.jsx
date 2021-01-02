@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 function MostraDipendenti(props){
     const classes = useStyles();
     const [direction, setDirection] = useState('UP')
-    const [column, setColumn] = useState('id')
+    const [column, setColumn] = useState('')
 
     const switchDirection = (key) => {
         if ( direction === 'DOWN'){
@@ -65,11 +65,10 @@ function MostraDipendenti(props){
             <Table className={classes.table}>
                 <TableHead>
                     {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
-                   {/*  in base allo stato direction mostra l'icona e al click chiama la funzione passandogli la key */}
-                    {/* <TableCell className={classes.tablehead}> ID {direction === 'UP' ? (<ArrowDropDownIcon onClick={() => switchDirection('id')}/>) : (<ArrowDropUpIcon onClick={() => switchDirection('id')}/>)} </TableCell> */}
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('id')}> ID {column === 'id' ? direction === 'UP' ? (<ArrowDropDownIcon onClick={() => switchDirection('id')}/>) : (<ArrowDropUpIcon onClick={() => switchDirection('id')}/>) : null} </TableCell>
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('nome')}> Nome {column === 'nome' ? direction === 'UP' ? (<ArrowDropDownIcon onClick={() => switchDirection('nome')}/>) : (<ArrowDropUpIcon onClick={() => switchDirection('nome')}/>) : null} </TableCell>
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('cognome')}> Cognome {column === 'cognome' ? direction === 'UP' ? (<ArrowDropDownIcon onClick={() => switchDirection('cognome')}/>) : (<ArrowDropUpIcon onClick={() => switchDirection('cognome')}/>) : null} </TableCell>
+                   {/*  Se la key è uguale a column allora mostra l'icona UP o DOWN.  Al click chiama la funzione passandogli la key */}
+                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('id')}> ID {column === 'id' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
+                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('nome')}> Nome {column === 'nome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
+                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('cognome')}> Cognome {column === 'cognome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
                     <TableCell className={classes.tablehead}></TableCell>
                 </TableHead>
                 <TableBody>

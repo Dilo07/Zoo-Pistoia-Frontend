@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import Dati from './zoo-pistoia/home'
-/* import Avviso from './messaggio avviso' 
-import Listanumeri from './esercizio map' */
+/* import Avviso from './messaggio avviso' */
 
 
 class ZooPistoia extends React.Component{
@@ -12,7 +11,6 @@ class ZooPistoia extends React.Component{
             <div>
                {/*  <Avviso/> */}
                 <Dati />
-                {/* <Listanumeri/> */}
             </div>
         )
     }

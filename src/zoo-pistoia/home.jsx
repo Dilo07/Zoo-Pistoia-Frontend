@@ -1,17 +1,11 @@
 import React from 'react';
 import Dipendenti from './dipendentiState'
+import Animali from './animaliState'
 import './App.css';
+import imgHome from './homeZooImg.jpg'
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
-function Area(props){
-    if(props.area === 'Dipendenti'){
-        return <Dipendenti/>
-    }
-    if(props.area === 'Animali'){
-        return <h1> Ecco gli animali</h1>
-    }
-}
+import {Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom'
 
 //modifica dello stile in una classe, quando si usano le classi importare withStyles
 const useStyles = ({
@@ -24,40 +18,31 @@ const useStyles = ({
 
 //esercizio button
 class Dati extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            areaSelezionata: 'Dipendenti'
-        }
-        this.clickAnimali = this.clickAnimali.bind(this);
-        this.clickDipendenti = this.clickDipendenti.bind(this);
-    }
-
-
-    clickDipendenti(){
-        this.setState({
-            areaSelezionata: 'Dipendenti'
-        })
-    }
-
-    clickAnimali(){
-        this.setState({
-            areaSelezionata: 'Animali'
-        })
-    }
 
     render(){
         const {classes} = this.props
+        const Home = () => (
+            <div> 
+                    <img src={imgHome} alt="ImageHome" className="CenterAndTop"></img>
+            </div>
+        )
         return(
             <div>
                 <div className="Center">
                     <h1> Zoo Pistoia</h1>
-                    {/* in base al bottone premuto modifica lo state.areaselezionata */}
-                    <Button className={classes.root} variant="contained" onClick={this.clickDipendenti}>Dipendenti</Button>
-                    <Button className={classes.root} variant="contained" onClick={this.clickAnimali}> Animali</Button>
+                    <Router>
+                        <Link to="/" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Home</Button></Link>
+                        <Link to="/dipendenti" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Dipendenti</Button></Link>
+                        <Link to="/animali" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Animali</Button></Link>
+                        <Switch>
+                            <Route path="/" exact component={Home}></Route>
+                            <Route path="/dipendenti" component={Dipendenti}></Route>
+                            <Route path="/animali" component={Animali}></Route>
+                        </Switch>
+                    </Router>
                 </div>
-                <Area area={this.state.areaSelezionata}></Area>
             </div>
+
         )
     }
 }

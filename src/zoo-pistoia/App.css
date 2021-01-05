@@ -8,6 +8,11 @@
 .Center{
     text-align: center;
 }
+
+.CenterAndTop{
+  text-align: center;
+    margin-top: 10%;
+}
   /* table, td, th {
     border: 2px solid darkgreen;
   } */

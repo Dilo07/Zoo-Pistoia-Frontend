@@ -163,10 +163,10 @@ class Dipendenti extends React.Component{
         if(error){
             return <div> error: {error.message}</div>
         }else if(!isloaded){
-            return <div>Loading...</div>
+            return <div className="CenterAndTop">Loading...</div>
         } else{
             if(viewForm){
-                return(<div className="Center">{Inputform}</div>)
+                return(<div className="CenterAndTop">{Inputform}</div>)
             }else{
                 return(<div>{Dati}</div>)
             }

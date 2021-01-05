@@ -53,7 +53,10 @@ class Dipendenti extends React.Component{
 
     //funzione richiamata quando si edita un dipendente
     editDipendente(infoNewDip){
-        /* const dipendenti = this.state.dipendenti */
+        //Inizialitto isloade a falso in modo da visualizzare il caricamento (Loading..)
+        this.setState({
+            isloaded: false
+        })
         fetch('http://localhost:8080/Dipendenti/updateDipendente', {
             method: 'put',
             headers: {'Content-type': 'application/json'},
@@ -67,13 +70,18 @@ class Dipendenti extends React.Component{
             /* anziché modificare lo state dipendenti aggiorno la pagina*/
             window.location.reload();
             this.setState({
-                viewForm: !this.state.viewForm
+                viewForm: !this.state.viewForm,
+                isloaded: true
             })
         })
     }
 
     //funzione richiamata quando si salva un nuovo dipendente
     addDipendente(infoNewDip){
+        //Inizialitto isloade a falso in modo da visualizzare il caricamento (Loading..)
+        this.setState({
+            isloaded: false
+        })
         const dipendenti = this.state.dipendenti
         fetch('http://localhost:8080/Dipendenti/newDipendente', {
             method: 'post',
@@ -87,20 +95,26 @@ class Dipendenti extends React.Component{
             const newdipendenti = dipendenti.concat({ id: result, nome: infoNewDip.nome, cognome: infoNewDip.cognome})
             this.setState({
                 dipendenti: newdipendenti,
-                viewForm: !this.state.viewForm
+                viewForm: !this.state.viewForm,
+                isloaded: true
             })
         })
     }
 
     //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti
     deleteDipendente(id){
+        //Inizialitto isloade a falso in modo da visualizzare il caricamento (Loading..)
+        this.setState({
+            isloaded: false
+        })
         const dipendenti = this.state.dipendenti
         fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {
             method: "delete"}).then(response => response.json())
         .then(result => { 
             const newdipendenti = dipendenti.filter((dipendente) => dipendente.id !== id)
                 this.setState({
-                    dipendenti: newdipendenti
+                    dipendenti: newdipendenti,
+                    isloaded: true
                 })
             },
             (error) => {

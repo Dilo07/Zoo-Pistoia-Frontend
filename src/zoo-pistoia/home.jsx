@@ -2,7 +2,7 @@ import React from 'react';
 import Dipendenti from './dipendentiState'
 import Animali from './animaliState'
 import './App.css';
-import imgHome from './homeZooImg.jpg'
+import imgHome from './Image/homeZooImg.jpg'
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import {Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom'

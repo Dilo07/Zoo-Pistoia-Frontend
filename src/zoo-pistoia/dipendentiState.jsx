@@ -1,7 +1,7 @@
 import React from 'react'
 /* import { withStyles } from '@material-ui/core/styles'; */
-import InputForm from './InputForm'
-import MostraDipendenti from './mostradipendenti'
+import InputForm from './inputFormDipendenti'
+import MostraDipendenti from './mostraDipendenti'
 
 
 class Dipendenti extends React.Component{
@@ -95,7 +95,8 @@ class Dipendenti extends React.Component{
     //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti
     deleteDipendente(id){
         const dipendenti = this.state.dipendenti
-        fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {method: "delete"}).then(response => response.json())
+        fetch('http://localhost:8080/Dipendenti/deleteDipendente/'+ id, {
+            method: "delete"}).then(response => response.json())
         .then(result => { 
             const newdipendenti = dipendenti.filter((dipendente) => dipendente.id !== id)
                 this.setState({
@@ -114,42 +115,40 @@ class Dipendenti extends React.Component{
 
     sortDipendenti(key, direction){
         if (direction === 'DOWN'){
-            console.log(this.state.dipendenti)
             this.setState({
                 dipendenti: this.state.dipendenti.sort((a,b) => 
-                    {if(a[key] > b[key]){
-                        return 1
-                    }
-                    if(a[key] < b[key]){
-                        return -1
-                    }
-                    else {
-                        return 0
-                    }
-                    // Ascending
-                    /* a[key] - b[key] */
+                    {
+                        if(a[key] > b[key]){
+                            return 1
+                        }
+                        if(a[key] < b[key]){
+                            return -1
+                        }
+                        else {
+                            return 0
+                        }
+                        // Ascending
+                        /* a[key] - b[key] */
                     })
             })
         }
         else{
-            console.log(this.state.dipendenti)
             this.setState({
                 dipendenti: this.state.dipendenti.sort((a,b) => 
                    /*  b[key] - a[key] */
-                   {
-                    if(b[key] > a[key]){
-                        return 1
-                    }
-                    if(b[key] < a[key]){
-                        return -1
-                    }
-                    else {
-                        return 0
-                    }
-                   })
+                    {
+                        if(b[key] > a[key]){
+                            return 1
+                        }
+                        if(b[key] < a[key]){
+                            return -1
+                        }
+                        else {
+                            return 0
+                        }
+                    })
             })
         }
-       
     }
 
     render(){

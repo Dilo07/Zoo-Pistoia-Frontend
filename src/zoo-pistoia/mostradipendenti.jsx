@@ -62,7 +62,7 @@ function MostraDipendenti(props){
     <div>
         <Button className={classes.root} onClick={() => props.clickAdd()} variant="contained">Aggiungi</Button>
         <TableContainer component={Paper}>
-            <Table className={classes.table}>
+            <Table>
                 <TableHead>
                     {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
                    {/*  Se la key è uguale a column allora mostra l'icona UP o DOWN.  Al click chiama la funzione passandogli la key */}

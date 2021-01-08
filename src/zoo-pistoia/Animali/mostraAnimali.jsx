@@ -37,7 +37,6 @@ const useStyles = makeStyles({
 function MostraAnimali(props) {
 
     const classes = useStyles();
-
     return(
         <div>
             <Button className={classes.root} variant="contained">Aggiungi</Button>
@@ -46,15 +45,17 @@ function MostraAnimali(props) {
                     <TableHead>
                         <TableCell className={classes.tablehead} > ID </TableCell>
                         <TableCell className={classes.tablehead} > Tipo Animale </TableCell>
+                        <TableCell className={classes.tablehead}> ID Recinzione</TableCell>
                         <TableCell className={classes.tablehead}></TableCell>
                     </TableHead>
                     <TableBody>
                     {props.animali.map(animale => (
                         <TableRow className={classes.tr} key={animale.id}>
                             {/* <TableCell padding="checkbox"><Checkbox></Checkbox></TableCell> */}
-                            <TableCell>{animale.id}</TableCell>
-                            <TableCell>{animale.tipo_animale}</TableCell> 
-                            <TableCell><Button className={classes.delete} variant="contained">Elimina</Button>
+                            <TableCell className={classes.tr}>{animale.id}</TableCell>
+                            <TableCell className={classes.tr}>{animale.tipo_animale}</TableCell> 
+                            <TableCell className={classes.tr}>{animale.id_recinzione}</TableCell>
+                            <TableCell className={classes.tr}><Button className={classes.delete} variant="contained">Elimina</Button>
                             <Button className={classes.edit} variant="contained">Modifica</Button></TableCell>
                         </TableRow>                        
                     ))}

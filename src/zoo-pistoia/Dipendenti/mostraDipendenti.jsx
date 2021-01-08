@@ -75,9 +75,9 @@ function MostraDipendenti(props){
                 {props.dipendenti.map(dipendente => (
                     <TableRow className={classes.tr} key={dipendente.id}>
                         {/* <TableCell padding="checkbox"><Checkbox></Checkbox></TableCell> */}
-                        <TableCell>{dipendente.id}</TableCell>
-                        <TableCell>{dipendente.nome}</TableCell> 
-                        <TableCell>{dipendente.cognome}</TableCell>
+                        <TableCell className={classes.tr}>{dipendente.id}</TableCell>
+                        <TableCell className={classes.tr}>{dipendente.nome}</TableCell> 
+                        <TableCell className={classes.tr}>{dipendente.cognome}</TableCell>
                         <TableCell><Button className={classes.delete} onClick={() => props.clickDelete(dipendente.id)} variant="contained">Elimina</Button>
                         <Button className={classes.edit} onClick={() => props.clickEdit(dipendente)} variant="contained">Modifica</Button></TableCell>
                     </TableRow>                        

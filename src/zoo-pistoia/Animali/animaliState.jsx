@@ -31,11 +31,15 @@ class Animali extends React.Component{
     }    
 
     render(){
-        const {animali} = this.state
+        const {animali,error,isloaded} = this.state
         const dati = <MostraAnimali animali={animali}/>
-        return(
-            <div> {dati} </div>
-        )
+        if(error){
+            return <div> error: {error.message}</div>
+        }else if (!isloaded){
+            return <div className="CenterAndTop"> Loading...</div>
+        }else{
+            return <div> {dati} </div>
+        }
     }
 }
 

@@ -57,7 +57,6 @@ function MostraDipendenti(props){
         }
     }
 
-
     return( 
     <div>
         <Button className={classes.root} onClick={() => props.clickAdd()} variant="contained">Aggiungi</Button>

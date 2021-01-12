@@ -11,8 +11,8 @@ class Dipendenti extends React.Component{
             error: null,
             isloaded: false,
             dipendenti: [],
-            viewForm: false,
-            dipendenteEdit: []
+            dipendenteEdit: [],
+            viewForm: false
         }
     }
     //funzione che si avvia non appena è stato inizializzato lo stato
@@ -47,12 +47,14 @@ class Dipendenti extends React.Component{
     switchFormEdit(dipendente){
         this.setState({
             viewForm: !this.state.viewForm,
-            dipendenteEdit: dipendente
+            /* Metodo Spread = concat perchè quando assegniamo un array o un oggetto ad una variabile, quando l'array cambia cambia anche la variabile
+            mentre con il metodo Spread ovviamo a questo problema*/
+            dipendenteEdit: {...dipendente}
         })
     }
 
     //funzione richiamata quando si edita un dipendente
-    editDipendente(infoNewDip){
+    editDipendente(){
         //Inizialitto isloade a falso in modo da visualizzare il caricamento (Loading..)
         this.setState({
             isloaded: false
@@ -61,23 +63,30 @@ class Dipendenti extends React.Component{
             method: 'put',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                id: infoNewDip.id,
-                nome: infoNewDip.nome,
-                cognome: infoNewDip.cognome
+                id: this.state.dipendenteEdit.id,
+                nome: this.state.dipendenteEdit.nome,
+                cognome: this.state.dipendenteEdit.cognome
             })
         }).then(response => response.json())
         .then(result => {
             /* anziché modificare lo state dipendenti aggiorno la pagina*/
-            window.location.reload();
+            const newState = [...this.state.dipendenti]
+            /* il foreach non importa assegnarlo alla variabile */
+            newState.forEach((dipendente) => {
+                if(dipendente.id === this.state.dipendenteEdit.id){ 
+                    dipendente.nome = this.state.dipendenteEdit.nome 
+                    dipendente.cognome = this.state.dipendenteEdit.cognome}})
             this.setState({
+                dipendenti: [...newState],
                 viewForm: !this.state.viewForm,
                 isloaded: true
             })
+
         })
     }
 
     //funzione richiamata quando si salva un nuovo dipendente
-    addDipendente(infoNewDip){
+    addDipendente(){
         //Inizialitto isloade a falso in modo da visualizzare il caricamento (Loading..)
         this.setState({
             isloaded: false
@@ -87,18 +96,38 @@ class Dipendenti extends React.Component{
             method: 'post',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                nome: infoNewDip.nome,
-                cognome: infoNewDip.cognome
+                nome: this.state.dipendenteEdit.nome,
+                cognome: this.state.dipendenteEdit.cognome
             })
         }).then(response => response.json())
         .then(result => {
-            const newdipendenti = dipendenti.concat({ id: result, nome: infoNewDip.nome, cognome: infoNewDip.cognome})
+            const newdipendenti = dipendenti.concat({ id: result, nome: this.state.dipendenteEdit.nome, cognome: this.state.dipendenteEdit.cognome})
             this.setState({
                 dipendenti: newdipendenti,
                 viewForm: !this.state.viewForm,
                 isloaded: true
             })
         })
+    }
+
+    changeDipendenteHandler(val, key) {
+        const dip = this.state.dipendenteEdit
+        switch(key){
+            case ('nome'):
+                dip.nome = val
+                console.log(dip)
+                this.setState({
+                    dipendenteEdit: dip
+                })
+            break
+            case ('cognome'):
+                dip.cognome = val
+                this.setState({
+                    dipendenteEdit: dip
+                })
+            break
+            default: break
+        }
     }
 
     //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti
@@ -164,27 +193,35 @@ class Dipendenti extends React.Component{
             })
         }
     }
+    
 
     render(){
-        const {error,isloaded,dipendenti,viewForm, dipendenteEdit} = this.state
+        const {error,isloaded,viewForm,dipendenti,dipendenteEdit} = this.state
         /* const {classes} = this.props */
-        const Inputform = <InputForm dipendente={dipendenteEdit} clickBack={() => this.switchForm()} 
-        clickSaveAdd={(infoNewDip) => this.addDipendente(infoNewDip)} clickSaveEdit={(infoNewDip) => this.editDipendente(infoNewDip)}/>
+        const Inputform = <InputForm 
+            dipendenteEdit={dipendenteEdit} 
+            clickBack={() => this.switchForm()} 
+            clickSaveAdd={() => this.addDipendente()} 
+            clickSaveEdit={() => this.editDipendente()} 
+            changed={(val,key) => this.changeDipendenteHandler(val,key)}/>
+        
+        
+        const Dati = <MostraDipendenti 
+            dipendenti={dipendenti} 
+            clickAdd={() => this.switchForm()} 
+            clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
+            clickDelete={(id) => this.deleteDipendente(id)} 
+            sortBy={(key, direction) => this.sortDipendenti(key, direction)} />
 
-        const Dati = <MostraDipendenti dipendenti={dipendenti} clickAdd={() => this.switchForm()} clickEdit={(dipendente) => this.switchFormEdit(dipendente)} 
-        clickDelete={(id) => this.deleteDipendente(id)} sortBy={(key, direction) => this.sortDipendenti(key, direction)} />
-
-        if(error){
-            return <div className="CenterAndTop"> error: {error.message}</div>
-        }else if(!isloaded){
-            return <div className="CenterAndTop">Loading...</div>
-        } else{
-            if(viewForm){
-                return(<div className="CenterAndTop">{Inputform}</div>)
-            }else{
-                return(<div>{Dati}</div>)
-            }
-        }
+        return (
+            <>
+            {   error ? <div className="CenterAndTop"> error : {error.message}</div> 
+                : !isloaded ? <div className="CenterAndTop">Loading...</div> 
+                : viewForm ? <div className="CenterAndTop">{Inputform}</div> 
+                : <div>{Dati}</div>
+            } 
+            </>
+        )
     }
 }
 

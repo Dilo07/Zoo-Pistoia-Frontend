@@ -1,6 +1,7 @@
 import React from 'react';
 import Dipendenti from './Dipendenti/dipendentiState'
 import Animali from './Animali/animaliState'
+import Recinzioni from './Recinzioni/recinzioniState'
 import './App.css';
 import imgHome from './Image/homeZooImg.jpg'
 import Button from '@material-ui/core/Button';
@@ -33,10 +34,12 @@ class Dati extends React.Component{
                     <Router>
                         <Link to="/" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Home</Button></Link>
                         <Link to="/dipendenti" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Dipendenti</Button></Link>
+                        <Link to="/recinzioni" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Recinzioni</Button></Link>
                         <Link to="/animali" style={{ textDecoration: 'none' }}><Button className={classes.root} variant="contained"> Animali</Button></Link>
                         <Switch>
                             <Route path="/" exact component={Home}></Route>
                             <Route path="/dipendenti" component={Dipendenti}></Route>
+                            <Route path="/recinzioni" component={Recinzioni}></Route>
                             <Route path="/animali" component={Animali}></Route>
                         </Switch>
                     </Router>

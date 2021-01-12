@@ -13,7 +13,7 @@ class Animali extends React.Component{
     }
     //funzione che si avvia non appena è stato inizializzato lo stato
     componentDidMount(){
-        //chiamata get di tutti i dipendenti
+        //chiamata get di tutti gli animali
         fetch('http://localhost:8080/Animali/getAll').then(response => response.json())
         .then(result => {
             this.setState({

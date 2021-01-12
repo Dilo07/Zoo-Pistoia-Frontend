@@ -42,11 +42,13 @@ function MostraRecinzioni(props){
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
-                        <TableCell className={classes.tablehead} > ID </TableCell>
-                        <TableCell className={classes.tablehead} > Tipo Animali </TableCell>
-                        <TableCell className={classes.tablehead}> Capienza totale</TableCell>
-                        <TableCell className={classes.tablehead}> Posti disponibili</TableCell>
-                        <TableCell className={classes.tablehead}></TableCell>
+                        <TableRow>
+                            <TableCell className={classes.tablehead} > ID </TableCell>
+                            <TableCell className={classes.tablehead} > Tipo Animali </TableCell>
+                            <TableCell className={classes.tablehead}> Capienza totale</TableCell>
+                            <TableCell className={classes.tablehead}> Posti disponibili</TableCell>
+                            <TableCell className={classes.tablehead}></TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                     {props.recinzioni.map(recinzione => (

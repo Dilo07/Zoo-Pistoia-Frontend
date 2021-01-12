@@ -34,7 +34,13 @@ class Recinzioni extends React.Component{
         const {recinzioni, error, isloaded} = this.state
         const dati = <MostraRecinzioni recinzioni={recinzioni}></MostraRecinzioni>
         console.log(recinzioni)
-        return <div> {dati} </div>
+        if(error){
+            return <div className="CenterAndTop"> error: {error.message} </div>
+        }else if (!isloaded){
+            return <div className="CenterAndTop"> loading... </div>
+        }else{
+            return <div> {dati} </div>
+        }
     }
 }
 

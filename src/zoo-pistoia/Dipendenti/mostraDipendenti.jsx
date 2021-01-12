@@ -64,12 +64,14 @@ function MostraDipendenti(props){
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
+                    <TableRow>
                     {/* <TableCell padding="checkbox"> <Checkbox></Checkbox> </TableCell> */}
                    {/*  Se la key è uguale a column allora mostra l'icona UP o DOWN.  Al click chiama la funzione passandogli la key */}
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('id')}> ID {column === 'id' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('nome')}> Nome {column === 'nome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
-                    <TableCell className={classes.tablehead} onClick={ () => switchDirection('cognome')}> Cognome {column === 'cognome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
-                    <TableCell className={classes.tablehead}></TableCell>
+                        <TableCell className={classes.tablehead} onClick={ () => switchDirection('id')}> ID {column === 'id' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
+                        <TableCell className={classes.tablehead} onClick={ () => switchDirection('nome')}> Nome {column === 'nome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
+                        <TableCell className={classes.tablehead} onClick={ () => switchDirection('cognome')}> Cognome {column === 'cognome' ? direction === 'UP' ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/> : null} </TableCell>
+                        <TableCell className={classes.tablehead}></TableCell>
+                    </TableRow>
                 </TableHead>
                 <TableBody>
                 {props.dipendenti.map(dipendente => (

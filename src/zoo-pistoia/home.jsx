@@ -45,7 +45,6 @@ class Dati extends React.Component{
                     </Router>
                 </div>
             </div>
-
         )
     }
 }

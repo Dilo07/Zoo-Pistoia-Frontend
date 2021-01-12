@@ -175,7 +175,7 @@ class Dipendenti extends React.Component{
         clickDelete={(id) => this.deleteDipendente(id)} sortBy={(key, direction) => this.sortDipendenti(key, direction)} />
 
         if(error){
-            return <div> error: {error.message}</div>
+            return <div className="CenterAndTop"> error: {error.message}</div>
         }else if(!isloaded){
             return <div className="CenterAndTop">Loading...</div>
         } else{

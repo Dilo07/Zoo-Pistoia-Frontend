@@ -34,7 +34,7 @@ class Animali extends React.Component{
         const {animali,error,isloaded} = this.state
         const dati = <MostraAnimali animali={animali}/>
         if(error){
-            return <div> error: {error.message}</div>
+            return <div className="CenterAndTop"> error: {error.message}</div>
         }else if (!isloaded){
             return <div className="CenterAndTop"> Loading...</div>
         }else{

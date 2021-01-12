@@ -43,10 +43,12 @@ function MostraAnimali(props) {
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
-                        <TableCell className={classes.tablehead} > ID </TableCell>
-                        <TableCell className={classes.tablehead} > Tipo Animale </TableCell>
-                        <TableCell className={classes.tablehead}> ID Recinzione</TableCell>
-                        <TableCell className={classes.tablehead}></TableCell>
+                        <TableRow>
+                            <TableCell className={classes.tablehead} > ID </TableCell>
+                            <TableCell className={classes.tablehead} > Tipo Animale </TableCell>
+                            <TableCell className={classes.tablehead}> ID Recinzione</TableCell>
+                            <TableCell className={classes.tablehead}></TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                     {props.animali.map(animale => (

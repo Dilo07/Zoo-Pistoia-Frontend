@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import Dati from './zoo-pistoia/home'
+import Dati from './zoo-pistoia-FrontEnd/home'
 /* import Avviso from './messaggio avviso' */
 
 

@@ -69,9 +69,9 @@ class Dipendenti extends React.Component{
             })
         }).then(response => response.json())
         .then(result => {
-            /* anziché modificare lo state dipendenti aggiorno la pagina*/
+            /* assegno a newState il nuovo stato dipendenti aggiornato sul db*/
             const newState = [...this.state.dipendenti]
-            /* il foreach non importa assegnarlo alla variabile */
+            /* il foreach non importa assegnarlo alla variabile, scorre tutto dipendente se trovo quello con lo stesso id aggiorna nome e cognome */
             newState.forEach((dipendente) => {
                 if(dipendente.id === this.state.dipendenteEdit.id){ 
                     dipendente.nome = this.state.dipendenteEdit.nome 
@@ -83,6 +83,27 @@ class Dipendenti extends React.Component{
             })
 
         })
+    }
+
+    // funzione richiamata ogni volte che gli input del form cambiano
+    changeDipendenteHandler(val, key) {
+        const dip = this.state.dipendenteEdit
+        switch(key){
+            case ('nome'):
+                dip.nome = val
+                console.log(dip)
+                this.setState({
+                    dipendenteEdit: dip
+                })
+            break
+            case ('cognome'):
+                dip.cognome = val
+                this.setState({
+                    dipendenteEdit: dip
+                })
+            break
+            default: break
+        }
     }
 
     //funzione richiamata quando si salva un nuovo dipendente
@@ -108,26 +129,6 @@ class Dipendenti extends React.Component{
                 isloaded: true
             })
         })
-    }
-
-    changeDipendenteHandler(val, key) {
-        const dip = this.state.dipendenteEdit
-        switch(key){
-            case ('nome'):
-                dip.nome = val
-                console.log(dip)
-                this.setState({
-                    dipendenteEdit: dip
-                })
-            break
-            case ('cognome'):
-                dip.cognome = val
-                this.setState({
-                    dipendenteEdit: dip
-                })
-            break
-            default: break
-        }
     }
 
     //funzione per richiamare il delete prendendo l'id come parametro e riaggiornando lo state con i nuovi dipendenti

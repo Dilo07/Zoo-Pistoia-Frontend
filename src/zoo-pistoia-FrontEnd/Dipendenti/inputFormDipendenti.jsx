@@ -13,7 +13,7 @@ const useStyles = makeStyles({
       }
 })
 
-function InputForm(props){
+const InputForm = (props) => {
     const classes = useStyles();
     //hooks definisco l'oggetto infoNewDip con le sue istanze nome e cognome che saranno modificati con il setInfo che richiamerà useStase
     /* const [ infoNewDip, setInfo ] = useState({id: props.dipendente.id, nome: props.dipendente.nome, cognome: props.dipendente.cognome}); */
@@ -24,10 +24,7 @@ function InputForm(props){
                 alert('Inserisci un valore')
             }
             else{
-                props.clickSaveAdd({
-                    nome: props.dipendenteEdit.nome,
-                    cognome: props.dipendenteEdit.cognome
-                })
+                props.clickSaveAdd()
             }
         }
         else{
@@ -35,11 +32,7 @@ function InputForm(props){
                 alert('Inserisci un valore')
             }
             else{
-                props.clickSaveEdit({
-                    id: props.dipendenteEdit.id,
-                    nome: props.dipendenteEdit.nome,
-                    cognome: props.dipendenteEdit.cognome
-                })
+                props.clickSaveEdit()
             }
         }
     }
@@ -53,7 +46,7 @@ function InputForm(props){
                 <TextField required onChange={e => props.changed(e.target.value, 'nome')} value={props.dipendenteEdit.nome} label="Nome"/>
             </Grid>
             <Grid>
-                {/* ... prende l'oggetto infoNewDip e va ad aggiungere la modifica fatta su cognome, lasciando invariato nome */}
+                {/* ogni volta che il valore di input cambia va a richiamare la funzione nel padre, modificando il dipendenteEdit */}
                 {/* <TextField required onChange={e => setInfo({...infoNewDip, cognome: e.target.value})} value={infoNewDip.cognome} label="Cognome" defaultValue=""/> */}
                 <TextField required onChange={e => props.changed(e.target.value, 'cognome')} value={props.dipendenteEdit.cognome} label="Cognome"/>
             </Grid>
